@@ -112,6 +112,8 @@ private:
 
 class TestIndexedCollection: public QObject{
 
+    Q_OBJECT
+
 
     int const numberOfElements_ = 1000000;
     IndexedCollection* collection_;
@@ -126,8 +128,7 @@ class TestIndexedCollection: public QObject{
         qint64 period;
         QElapsedTimer time;
         time.restart();
-        for(int i = 0; i < numberOfElements_; ++i)
-        {
+        for(int i = 0; i < numberOfElements_; ++i){
             collection_->add(i);
         }
         period = time.elapsed();
@@ -138,8 +139,7 @@ class TestIndexedCollection: public QObject{
         qint64 period;
         QElapsedTimer time;
         time.restart();
-        for(int i = 0; i < numberOfElements_; ++i)
-        {
+        for(int i = 0; i < numberOfElements_; ++i){
             collection_->find(i);
         }
 
@@ -148,13 +148,18 @@ class TestIndexedCollection: public QObject{
     }
 
 public:
-    TestIndexedCollection(IndexedCollection *collection): collection_(collection){};
+//    TestIndexedCollection(IndexedCollection *collection, QObject* parent = 0):QObject(parent){
+//        collection_ = collection;
+//    };
+    TestIndexedCollection(IndexedCollection *collection){
+        collection_ = collection;
+    };
 
 
 private slots:
     void testEmptyCollection_data(){
-        QTest::addColumn<int>("Index");
-        QTest::addColumn<std::optional<int>>("Expected Result");
+        QTest::addColumn<int>("index");
+        QTest::addColumn<std::optional<int>>("expected");
 
         QTest::newRow(typeid(*collection_).name()) << 0 << std::nullopt;
         QTest::newRow(typeid(*collection_).name()) << 1 << std::nullopt;
@@ -175,8 +180,8 @@ private slots:
     }
 
     void testFilledCollection_data(){
-        QTest::addColumn<int>("Index");
-        QTest::addColumn<std::optional<int>>("Expected Result");
+        QTest::addColumn<int>("index");
+        QTest::addColumn<std::optional<int>>("expected");
 
 
         int numberOfElements = 6;
@@ -210,9 +215,9 @@ private slots:
 
 int main()
 {
-     QTest::qExec(new TestIndexedCollection(new Vector));
-     QTest::qExec(new TestIndexedCollection(new List));
-     QTest::qExec(new TestIndexedCollection(new Hash));
+    QTest::qExec(new TestIndexedCollection(new Vector));
+    QTest::qExec(new TestIndexedCollection(new List));
+    QTest::qExec(new TestIndexedCollection(new Hash));
 
     return 0;
 }
