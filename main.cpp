@@ -20,8 +20,13 @@
 #include <iostream>
 #include <typeinfo>
 int main()
-{   std::cout<< typeid(std::nullopt).name();
+{   
+    /// review: видимо какой-то отладочный вывод, который не нужен
+    std::cout<< typeid(std::nullopt).name();
 
+    
+    /// review: договорились сделать тесты чистыми, чтобы ничего не торчало из них.
+    /// то есть тесты всё нужное должны создать сами
     QTest::qExec(new TestIndexedCollection(new Vector));
     QTest::qExec(new TestIndexedCollection(new List));
     QTest::qExec(new TestIndexedCollection(new Hash));
