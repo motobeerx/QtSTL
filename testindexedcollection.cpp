@@ -37,11 +37,15 @@ void TestIndexedCollection::cleanup()
 
 };
 
-
+/// review: если делать тесты чистыми, то эти два метода можно объединить
+/// testEmptyCollection и testFilledCollection. Просто будем создавать пустую коллекцию.
+/// выглядит странным такой тест пустой коллекции, потому что тут проверяется только
+/// одно условие, что коллекция пуста. Передаваемый индекс при этом значения не имеет.
 void TestIndexedCollection::testEmptyCollection_data(){
     QTest::addColumn<int>("index");
     QTest::addColumn<std::optional<int>>("expected");
 
+    /// review: все тест-кейсы имеют одинаковые имена. Если один упадёт, как мы его найдём тут?
     QTest::newRow(typeid(*collection_).name()) << 0 <<(std::optional<int>) std::nullopt;
     QTest::newRow(typeid(*collection_).name()) << 1 << (std::optional<int>) std::nullopt;
     QTest::newRow(typeid(*collection_).name()) << -1 << (std::optional<int>) std::nullopt;
