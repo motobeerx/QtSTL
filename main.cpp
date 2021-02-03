@@ -17,14 +17,5 @@
 /// 8. ++Поменять семантику find - на отрицательных индексах ищет элемент с конца. Сначала поменять тесты, потом код. +
 /// 9. ++Написать бенчмарк для операции find +
 #include "testindexedcollection.h"
-#include <iostream>
-#include <typeinfo>
-int main()
-{   std::cout<< typeid(std::nullopt).name();
 
-    QTest::qExec(new TestIndexedCollection(new Vector));
-    QTest::qExec(new TestIndexedCollection(new List));
-    QTest::qExec(new TestIndexedCollection(new Hash));
-
-    return 0;
-}
+QTEST_MAIN(TestIndexedCollection)

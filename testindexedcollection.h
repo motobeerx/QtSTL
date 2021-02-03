@@ -15,25 +15,26 @@ class TestIndexedCollection: public QObject{
 
 
     int const numberOfElements_ = 1000000;
-    IndexedCollection* collection_;
 
-    void fillCollection(int amountOfElements);
-    void benchmarkAdd();
-    void benchmarkFind();
+    void fillCollection(IndexedCollection *collection, int amountOfElements);
+    void benchmarkAdd(IndexedCollection *collection);
+    void benchmarkFind(IndexedCollection *collection);
 
 public:
-    TestIndexedCollection(IndexedCollection *collection, QObject* parent = 0);
+    TestIndexedCollection(QObject* parent = 0);
     virtual ~TestIndexedCollection();
 
 private slots:
-    void init();
-    void cleanup();
+    void testVector_data();
+    void testVector();
 
-    void testEmptyCollection_data();
-    void testEmptyCollection();
-    void testFilledCollection_data();
-    void testFilledCollection();
-    void testPerfomanceCPU();
+    void testList_data();
+    void testList();
+
+    void testHash_data();
+    void testHash();
+
+    //void testPerfomanceCPU();
 };
 
 #endif // TESTINDEXEDCOLLECTION_H

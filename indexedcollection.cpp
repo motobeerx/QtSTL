@@ -22,7 +22,12 @@ void List::add(const int element){
 }
 
 std::optional<int> List::find(const int index) const {
-    if(elements_.isEmpty() or ((index < elements_.size()) xor (index >= -elements_.size()))){
+    bool emptyCollection = elements_.isEmpty();
+    bool indexInPositiveRange = index < elements_.size();
+    bool indexInNegativeRange = index >= -elements_.size();
+    bool invalidIndex = indexInPositiveRange xor indexInNegativeRange;
+
+    if(emptyCollection or invalidIndex){
         return std::nullopt;
     }
 
