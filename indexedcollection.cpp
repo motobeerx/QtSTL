@@ -6,6 +6,7 @@ void Vector::add(const int element) {
 }
 
 std::optional<int> Vector::find(const int index) const {
+    /// review: это условие очень сложное. Сегодня поговорим, как с этим быть
     if(elements_.isEmpty() or ((index < elements_.size()) xor (index >= -elements_.size()))){
         return std::nullopt;
     }
