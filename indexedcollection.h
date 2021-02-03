@@ -1,9 +1,11 @@
 #ifndef INDEXEDCOLLECTION_H
 #define INDEXEDCOLLECTION_H
+#include "ComplexValue.h"
 #include <optional>
 
 #include <QVector>
 #include <QHash>
+
 
 class IndexedCollection
 {
@@ -44,6 +46,26 @@ public:
 
 private:
     QHash<int, int> elements_;
+};
+
+class ComplexHash
+{
+public:
+    void add(const ComplexValue &element);
+    std::optional<ComplexValue> find(const int key) const;
+
+private:
+    QHash<int, ComplexValue> elements_;
+};
+
+class ComplexVector:
+{
+public:
+    void add(const ComplexValue &element);
+    std::optional<ComplexValue> find(const ComplexValue &element) const;
+
+private:
+    QVector<ComplexValue> elements_;
 };
 
 

@@ -6,7 +6,11 @@ void Vector::add(const int element) {
 }
 
 std::optional<int> Vector::find(const int index) const {
-    if(elements_.isEmpty() or ((index < elements_.size()) xor (index >= -elements_.size()))){
+    bool emptyCollection = elements_.isEmpty();
+    bool indexInPositiveRange = index < elements_.size();
+    bool indexInNegativeRange = index >= -elements_.size();
+    bool invalidIndex = indexInPositiveRange xor indexInNegativeRange;
+    if(emptyCollection or invalidIndex){
         return std::nullopt;
     }
 
@@ -41,7 +45,11 @@ void Hash::add(const int element) {
 }
 
 std::optional<int> Hash::find(const int index) const {
-    if(elements_.isEmpty() or ((index < elements_.size()) xor (index >= -elements_.size()))){
+    bool emptyCollection = elements_.isEmpty();
+    bool indexInPositiveRange = index < elements_.size();
+    bool indexInNegativeRange = index >= -elements_.size();
+    bool invalidIndex = indexInPositiveRange xor indexInNegativeRange;
+    if(emptyCollection or invalidIndex){
         return std::nullopt;
     }
 
@@ -51,9 +59,21 @@ std::optional<int> Hash::find(const int index) const {
 }
 
 
+void ComplexHash::add(const ComplexValue &element){
+    elements_.insert(element.key(), element);
+}
 
+std::optional<ComplexValue> ComplexHash::find(const int key) const{
+    return elements_.contains(key) ? elements_.value(key) : std::nullopt;
+}
 
+void ComplexVector::add(const ComplexValue &element){
+    elements_ << element;
+}
 
-
-
-
+std::optional<ComplexValue> ComplexVector::find(const ComplexValue &element) const{
+    if(elements_.contains(element)){
+        return element;
+    }
+    return std::nullopt;
+}
