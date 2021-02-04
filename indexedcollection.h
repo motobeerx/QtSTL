@@ -58,7 +58,7 @@ private:
     QHash<int, ComplexValue> elements_;
 };
 
-class ComplexVector:
+class ComplexVector
 {
 public:
     void add(const ComplexValue &element);
