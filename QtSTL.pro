@@ -11,6 +11,8 @@ CONFIG -= app_bundle
 
 SOURCES += \
         ComplexValue.cpp \
+        ComplexValueCollection.cpp \
+        TestComplexCollection.cpp \
         indexedcollection.cpp \
         main.cpp \
         testindexedcollection.cpp
@@ -22,5 +24,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ComplexValue.h \
+    ComplexValueCollection.h \
+    TestComplexCollection.h \
     indexedcollection.h \
     testindexedcollection.h

@@ -118,12 +118,3 @@ void TestIndexedCollection::testHash(){
     QCOMPARE(collection.find(index), expected);
 }
 
-
-
-//void TestIndexedCollection::testPerfomanceCPU(){
-//    Vector vector;
-//    QBENCHMARK{
-//        this->benchmarkAdd(&vector);
-//        //this->benchmarkFind(&vector);
-//    }
-//}

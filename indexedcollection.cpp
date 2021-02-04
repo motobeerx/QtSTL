@@ -58,22 +58,3 @@ std::optional<int> Hash::find(const int index) const {
     return elements_.value(reducedIndex);
 }
 
-
-void ComplexHash::add(const ComplexValue &element){
-    elements_.insert(element.key(), element);
-}
-
-std::optional<ComplexValue> ComplexHash::find(const int key) const{
-    return elements_.contains(key) ? elements_.value(key) : std::nullopt;
-}
-
-void ComplexVector::add(const ComplexValue &element){
-    elements_ << element;
-}
-
-std::optional<ComplexValue> ComplexVector::find(const ComplexValue &element) const{
-    if(elements_.contains(element)){
-        return element;
-    }
-    return std::nullopt;
-}

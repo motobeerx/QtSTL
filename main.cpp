@@ -17,5 +17,6 @@
 /// 8. ++Поменять семантику find - на отрицательных индексах ищет элемент с конца. Сначала поменять тесты, потом код. +
 /// 9. ++Написать бенчмарк для операции find +
 #include "testindexedcollection.h"
+#include "TestComplexCollection.h"
 
-QTEST_MAIN(TestIndexedCollection)
+QTEST_MAIN(TestComplexCollection)

@@ -48,25 +48,5 @@ private:
     QHash<int, int> elements_;
 };
 
-class ComplexHash
-{
-public:
-    void add(const ComplexValue &element);
-    std::optional<ComplexValue> find(const int key) const;
-
-private:
-    QHash<int, ComplexValue> elements_;
-};
-
-class ComplexVector
-{
-public:
-    void add(const ComplexValue &element);
-    std::optional<ComplexValue> find(const ComplexValue &element) const;
-
-private:
-    QVector<ComplexValue> elements_;
-};
-
 
 #endif // INDEXEDCOLLECTION_H

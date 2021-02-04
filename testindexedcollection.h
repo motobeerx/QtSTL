@@ -33,8 +33,6 @@ private slots:
 
     void testHash_data();
     void testHash();
-
-    //void testPerfomanceCPU();
 };
 
 #endif // TESTINDEXEDCOLLECTION_H
