@@ -3,6 +3,8 @@
 
 
 void TestComplexCollection::fillRandComplexCollection(ComplexValueCollection * collection, int numberOfElements){
+    /// review: ты хочешь в коллекции 1000000 элементов, но у тебя они будут или с повторяющимися ключами, или их будет <= 1000.
+    /// то есть разное поведения для вектора и таблицы
     for(int i = 0; i != numberOfElements; ++i){
         collection->add(ComplexValue(rand() % 1000 + 1));
     }
@@ -27,6 +29,11 @@ void TestComplexCollection::testComplexVector_data()
 
     int numberOfElements = 6;
     ComplexValueVector vector;
+    
+    /// review: если ты тестируешь пустой контейнер, то лучше его передать пустой прямо в тест-кейс:
+    /// QTest::newRow("1. Test empty vector") << ComplexValueVector()  <<  0 << (std::optional<int>) std::nullopt;
+    
+    /// review: подумай, как можно избавиться от преобразования (std::optional<int>) std::nullopt
     QTest::newRow("1. Test empty vector") << vector  <<  0 << (std::optional<int>) std::nullopt;
     this->fillLinearComplexCollection(&vector, numberOfElements);
     QTest::newRow("2. Find 0 element in vector") << vector << 0 << (std::optional<int>) 0;
@@ -34,7 +41,14 @@ void TestComplexCollection::testComplexVector_data()
     QTest::newRow("4. Find last element in vector") << vector  << numberOfElements - 1 << (std::optional<int>) (numberOfElements - 1);
     QTest::newRow("5. Find prelast element in vector") << vector  << numberOfElements - 2 << (std::optional<int>) (numberOfElements - 2);
     QTest::newRow("6. Find afterlast element in vector") << vector  << numberOfElements <<  (std::optional<int>) std::nullopt;
-    QTest::newRow("7. Find element with invalid index in vector") << vector  <<  1000 << (std::optional<int>) std::nullopt;
+    
+    /// review: код, который так сжат, довольно трудно читать. Не нужно жалеть пустого пространства.
+    /// Если выровнять его так, как ниже, то будет гораздо приятнее
+   
+    QTest::newRow("7. Find element with invalid index in vector") 
+        << vector  
+        <<  1000 
+        << (std::optional<int>) std::nullopt;
 }
 
 
@@ -90,6 +104,9 @@ void TestComplexCollection::benchmarkComplexVectorAdd()
 
 void TestComplexCollection::benchmarkComplexVectorFind()
 {
+    /// review: такой бенчмарк абсолютно зависит от  того, что выдал нам getRandomeKey().
+    /// то есть на его показания сложно операться, от запуска к запуску он будет давать очень разные показания.
+    /// подумай, как этого можно избежать
     ComplexValueVector vector;
     this->fillRandComplexCollection(&vector, numberOfElements_);
     int target = vector.getRandomeKey();
