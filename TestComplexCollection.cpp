@@ -1,5 +1,6 @@
 #include "TestComplexCollection.h"
 #include <cstdlib>
+#include <QElapsedTimer>
 
 
 void TestComplexCollection::fillRandComplexCollection(ComplexValueCollection * collection, int numberOfElements){
@@ -94,10 +95,29 @@ void TestComplexCollection::benchmarkComplexVectorFind()
     ComplexValueVector vector;
     this->fillRandComplexCollection(&vector, numberOfElements_);
     int target = vector.getRandomeKey();
-    std::cout<<target<<std::endl;
+    //std::cout<<target<<std::endl;
     QBENCHMARK{
         vector.find(target);
     }
+}
+
+void TestComplexCollection::benchmarkComplexVectorFindCustom()
+{
+    ComplexValueVector vector;
+    this->fillRandComplexCollection(&vector, numberOfElements_);
+
+    QElapsedTimer timer;
+    qint64 totalTime = 0;
+    for(int i = 0; i != numberOfElements_; ++i){
+        int target = vector.getRandomeKey();
+        timer.restart();
+        for(int j = 0; j != 100; ++j)
+            vector.find(target);
+        totalTime += timer.elapsed();
+    }
+
+    std::cout<<"\nAverage time of Linear Search in Vector: "<<(double)totalTime/numberOfElements_/100<<std::endl;
+
 }
 
 
@@ -117,8 +137,27 @@ void TestComplexCollection::benchmarkComplexHashFind()
     int target = hash.getRandomeKey();
     //std::cout<<target<<std::endl;
     QBENCHMARK{
-            hash.find(target);
+        hash.find(target);
     }
+}
+
+void TestComplexCollection::benchmarkComplexHashFindCustom()
+{
+    ComplexValueHash hash;
+    this->fillRandComplexCollection(&hash, numberOfElements_);
+
+    QElapsedTimer timer;
+    qint64 totalTime = 0;
+    for(int i = 0; i != numberOfElements_; ++i){
+        int target = hash.getRandomeKey();
+        timer.restart();
+        for(int j = 0; j != 10000; ++j)
+            hash.find(target);
+        totalTime += timer.elapsed();
+    }
+
+    std::cout<<"\nAverage time of Search in Hash: "<<(double)totalTime/numberOfElements_/10000<<std::endl;
+
 }
 
 void TestComplexCollection::benchmarkComplexVectorCreationFromFile()
@@ -145,7 +184,7 @@ void TestComplexCollection::benchmarkComplexVectorFileFind()
     ComplexValueVector vector;
     readData(&vector);
     int target = vector.getRandomeKey();
-    std::cout<<target<<std::endl;
+    //std::cout<<target<<std::endl;
     QBENCHMARK{
         vector.find(target);
     }

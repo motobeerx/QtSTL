@@ -27,9 +27,11 @@ private slots:
 
     void benchmarkComplexVectorAdd();
     void benchmarkComplexVectorFind();
+    void benchmarkComplexVectorFindCustom();
 
     void benchmarkComplexHashAdd();
     void benchmarkComplexHashFind();
+    void benchmarkComplexHashFindCustom();
 
     void benchmarkComplexVectorCreationFromFile();
     void benchmarkComplexHashCreationFromFile();
