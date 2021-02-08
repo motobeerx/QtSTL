@@ -3,13 +3,22 @@
 #include <cstdlib>
 #include <QFile>
 #include <QTextStream>
-
+#include <QVector>
 
 
 ComplexValueCollection::ComplexValueCollection(){}
 
 void ComplexValueHash::add(const ComplexValue &element){
     elements_.insert(element.key(), element);
+}
+
+void ComplexValueHash::add(QHash<int, ComplexValue> const &vault)
+{
+    auto it = vault.begin();
+    while(it != vault.end()){
+        elements_.insert(it.key(), it.value());
+        ++it;
+    }
 }
 
 void ComplexValueHash::extend(const int key, const int value)
@@ -61,6 +70,15 @@ void ComplexValueHash::print() const
 
 void ComplexValueVector::add(const ComplexValue &element){
     elements_ << element;
+}
+
+void ComplexValueVector::add(QHash<int, ComplexValue> const &vault)
+{
+    auto it = vault.begin();
+    while(it != vault.end()){
+        elements_<<it.value();
+        ++it;
+    }
 }
 
 void ComplexValueVector::extend(const int key, const int value)
@@ -124,15 +142,24 @@ void generateData(int numberOfPairs,  QString fileName, QString delimiter)
 void readData(ComplexValueCollection *collection, QString fileName, QString delimiter)
 {
     QFile file(fileName);
+    QHash<int, ComplexValue> temporaryVault;
     if(file.open(QIODevice::ReadOnly)){
         while (!file.atEnd()) {
                 QString line = file.readLine();
                 QStringList data = line.split(delimiter);
                 int key = data.at(0).toInt();
                 int value = data.at(1).toInt();
-                collection->extend(key, value);
+                if(temporaryVault.contains(key)){
+                    temporaryVault.find(key).value().add(value);
+                }else{
+                    ComplexValue tmpComplexValue = ComplexValue(key);
+                    tmpComplexValue.add(value);
+                    temporaryVault.insert(key, tmpComplexValue);
+                }
         }
     }
+
+    collection->add(temporaryVault);
 }
 
 

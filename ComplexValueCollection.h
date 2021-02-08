@@ -11,6 +11,7 @@ class ComplexValueCollection
 public:
     ComplexValueCollection();
     virtual void add(const ComplexValue &element) = 0;
+    virtual void add(QHash<int, ComplexValue> const &vault) = 0;
     virtual void extend(int const key, int const value) = 0;
     virtual const ComplexValue* find(const int key) const = 0;
     virtual int size() const = 0;
@@ -23,6 +24,7 @@ class ComplexValueHash: public ComplexValueCollection
 {
 public:
     void add(const ComplexValue &element);
+    void add(QHash<int, ComplexValue> const &vault);
     void extend(int const key, int const value);
     const ComplexValue* find(const int key) const;
     int size() const;
@@ -38,6 +40,7 @@ class ComplexValueVector: public ComplexValueCollection
 {
 public:
     void add(const ComplexValue &element);
+    void add(QHash<int, ComplexValue> const &vault);
     void extend(int const key, int const value);
     const ComplexValue* find(const int key) const;
     int size() const;

@@ -116,7 +116,7 @@ void TestComplexCollection::benchmarkComplexVectorFindCustom()
 
     QElapsedTimer timer;
     qint64 totalTime = 0;
-    int amplifier = 100;
+    int amplifier = 1000;
     for(int i = 0; i != numberOfElements_; ++i){
         int target = vector.getRandomeKey();
         timer.restart();
@@ -156,7 +156,7 @@ void TestComplexCollection::benchmarkComplexHashFindCustom()
 
     QElapsedTimer timer;
     qint64 totalTime = 0;
-    int amplifier = 10000;
+    int amplifier = 100000;
     for(int i = 0; i != numberOfElements_; ++i){
         int target = hash.getRandomeKey();
         timer.restart();
