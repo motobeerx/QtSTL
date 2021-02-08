@@ -18,5 +18,15 @@
 /// 9. ++Написать бенчмарк для операции find +
 #include "testindexedcollection.h"
 #include "TestComplexCollection.h"
+#include "ComplexValueCollection.h"
 
 QTEST_MAIN(TestComplexCollection)
+//int main()
+//{
+//    generateData(1000000);
+//    ComplexValueCollection* hash = new ComplexValueHash;
+//    readData(hash);
+//    hash->print();
+//    return 0;
+//}
+

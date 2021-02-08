@@ -2,18 +2,18 @@
 #define COMPLEXVALUE_H
 
 #include <QVector>
+#include <iostream>
 
 struct ComplexValue
 {
-    /// review: значения по умолчанию нужно максимально избегать
-    /// тут я не вижу причин для их использования. И почему -1 ? 
-    
-    /// review: если конструктор имеет 1 аргумент, то нужно прописать ему explicit. 
-    /// это позволит избежать неявного преобразования int -> ComplexValue, которое является некорректным.
     ComplexValue(int const key = -1);
+    void add(int const value);
+    void print() const;
     bool operator==(ComplexValue const &other) const;
     bool operator<(ComplexValue const &other) const;
     int key() const;
+    // return const pointer
+    QVector<int> value() const;
 private:
     int key_;
     QVector<int> data_;

@@ -9,7 +9,7 @@ class TestComplexCollection: public QObject
 {
     Q_OBJECT
 
-    int const numberOfElements_ = 1000000;
+    int const numberOfElements_ = 10000;
 
     void fillRandComplexCollection(ComplexValueCollection * collection, int numberOfElements);
     void fillLinearComplexCollection(ComplexValueCollection * collection, int numberOfElements);
@@ -30,6 +30,12 @@ private slots:
 
     void benchmarkComplexHashAdd();
     void benchmarkComplexHashFind();
+
+    void benchmarkComplexVectorCreationFromFile();
+    void benchmarkComplexHashCreationFromFile();
+
+    void benchmarkComplexVectorFileFind();
+    void benchmarkComplexHashFileFind();
 };
 
 #endif // TESTCOMPLEXCOLLECTION_H
