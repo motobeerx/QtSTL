@@ -23,13 +23,12 @@ void ComplexValueHash::extend(const int key, const int value)
     }
 }
 
-// eleminate copying here
-std::optional<ComplexValue> ComplexValueHash::find(const int key) const{
-    ComplexValue element =  elements_.value(key);
-    if(element.key() == -1){
-        return std::nullopt;
+const ComplexValue* ComplexValueHash::find(const int key) const{
+    auto it = elements_.find(key);
+    if(it != elements_.end()){
+        return &(*it);
     }
-    return element;
+    return nullptr;
 }
 
 int ComplexValueHash::size() const
@@ -78,13 +77,13 @@ void ComplexValueVector::extend(const int key, const int value)
 
 }
 
-std::optional<ComplexValue> ComplexValueVector::find(const int key) const{
+const ComplexValue* ComplexValueVector::find(const int key) const{
     for(int i = 0; i < elements_.size(); ++i){
         if(elements_.at(i).key() == key){
-            return elements_.at(i);
+            return &elements_.at(i);
         }
     }
-    return std::nullopt;
+    return nullptr;
 }
 
 int ComplexValueVector::size() const

@@ -1,6 +1,10 @@
 #include "ComplexValue.h"
 
 
+ComplexValue::ComplexValue(){
+    data_ = QVector <int> ();
+}
+
 ComplexValue::ComplexValue(int const key):key_(key){
     data_ = QVector <int> ();
 }

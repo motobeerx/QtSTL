@@ -1,5 +1,6 @@
 #ifndef INDEXEDCOLLECTION_H
 #define INDEXEDCOLLECTION_H
+
 #include "ComplexValue.h"
 #include <optional>
 
@@ -47,6 +48,5 @@ public:
 private:
     QHash<int, int> elements_;
 };
-
 
 #endif // INDEXEDCOLLECTION_H

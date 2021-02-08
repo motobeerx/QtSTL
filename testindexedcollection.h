@@ -1,6 +1,7 @@
 #ifndef TESTINDEXEDCOLLECTION_H
 #define TESTINDEXEDCOLLECTION_H
 
+
 #include <optional>
 #include <QElapsedTimer>
 #include <QObject>
@@ -34,5 +35,6 @@ private slots:
     void testHash_data();
     void testHash();
 };
+
 
 #endif // TESTINDEXEDCOLLECTION_H

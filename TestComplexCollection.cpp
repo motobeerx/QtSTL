@@ -27,7 +27,7 @@ void TestComplexCollection::testComplexVector_data()
     QTest::addColumn<int>("key");
     QTest::addColumn<std::optional<int>>("expected");
 
-    QTest::newRow("1. Test empty vector") << ComplexValueVector()  <<  0 << (std::optional<int>) std::nullopt;
+    QTest::newRow("1. Test empty vector") << ComplexValueVector()  <<  0 <<(std::optional<int>) std::nullopt;
     int numberOfElements = 6;
     ComplexValueVector vector;
     this->fillLinearComplexCollection(&vector, numberOfElements);
@@ -46,7 +46,12 @@ void TestComplexCollection::testComplexVector()
     QFETCH(int, key);
     QFETCH(std::optional<int>, expected);
 
-    QCOMPARE(collection.find(key), expected);
+    if(collection.find(key) == nullptr){
+        QVERIFY(expected == std::nullopt);
+    }else{
+        QCOMPARE((std::optional<int>) (collection.find(key)->key()), expected);
+    }
+
 }
 
 
@@ -56,7 +61,7 @@ void TestComplexCollection::testComplexHash_data()
     QTest::addColumn<int>("key");
     QTest::addColumn<std::optional<int>>("expected");
 
-    QTest::newRow("1. Test empty hash") << ComplexValueHash()  <<  0 << (std::optional<int>) std::nullopt;
+    QTest::newRow("1. Test empty hash") << ComplexValueHash()  <<  0 <<(std::optional<int>) std::nullopt;
     int numberOfElements = 6;
     ComplexValueHash hash;
     this->fillLinearComplexCollection(&hash, numberOfElements);
@@ -75,7 +80,11 @@ void TestComplexCollection::testComplexHash()
     QFETCH(int, key);
     QFETCH(std::optional<int>, expected);
 
-    QCOMPARE(collection.find(key), expected);
+    if(collection.find(key) == nullptr){
+        QVERIFY(expected == std::nullopt);
+    }else{
+        QCOMPARE((std::optional<int>) (collection.find(key)->key()), expected);
+    }
 
 }
 
@@ -95,7 +104,6 @@ void TestComplexCollection::benchmarkComplexVectorFind()
     ComplexValueVector vector;
     this->fillRandComplexCollection(&vector, numberOfElements_);
     int target = vector.getRandomeKey();
-    //std::cout<<target<<std::endl;
     QBENCHMARK{
         vector.find(target);
     }
@@ -108,15 +116,16 @@ void TestComplexCollection::benchmarkComplexVectorFindCustom()
 
     QElapsedTimer timer;
     qint64 totalTime = 0;
+    int amplifier = 100;
     for(int i = 0; i != numberOfElements_; ++i){
         int target = vector.getRandomeKey();
         timer.restart();
-        for(int j = 0; j != 100; ++j)
+        for(int j = 0; j != amplifier; ++j)
             vector.find(target);
         totalTime += timer.elapsed();
     }
 
-    std::cout<<"\nAverage time of Linear Search in Vector: "<<(double)totalTime/numberOfElements_/100<<std::endl;
+    std::cout<<"\nAverage time of Linear Search in Vector: "<<(double)totalTime/numberOfElements_/amplifier<<std::endl;
 
 }
 
@@ -135,7 +144,6 @@ void TestComplexCollection::benchmarkComplexHashFind()
     ComplexValueHash hash;
     this->fillRandComplexCollection(&hash, numberOfElements_);
     int target = hash.getRandomeKey();
-    //std::cout<<target<<std::endl;
     QBENCHMARK{
         hash.find(target);
     }
@@ -148,15 +156,16 @@ void TestComplexCollection::benchmarkComplexHashFindCustom()
 
     QElapsedTimer timer;
     qint64 totalTime = 0;
+    int amplifier = 10000;
     for(int i = 0; i != numberOfElements_; ++i){
         int target = hash.getRandomeKey();
         timer.restart();
-        for(int j = 0; j != 10000; ++j)
+        for(int j = 0; j != amplifier; ++j)
             hash.find(target);
         totalTime += timer.elapsed();
     }
 
-    std::cout<<"\nAverage time of Search in Hash: "<<(double)totalTime/numberOfElements_/10000<<std::endl;
+    std::cout<<"\nAverage time of Search in Hash: "<<(double)totalTime/numberOfElements_/amplifier<<std::endl;
 
 }
 
@@ -184,7 +193,6 @@ void TestComplexCollection::benchmarkComplexVectorFileFind()
     ComplexValueVector vector;
     readData(&vector);
     int target = vector.getRandomeKey();
-    //std::cout<<target<<std::endl;
     QBENCHMARK{
         vector.find(target);
     }
@@ -196,9 +204,8 @@ void TestComplexCollection::benchmarkComplexHashFileFind()
     ComplexValueHash hash;
     readData(&hash);
     int target = hash.getRandomeKey();
-    //std::cout<<target<<std::endl;
     QBENCHMARK{
-            hash.find(target);
+        hash.find(target);
     }
 }
 
